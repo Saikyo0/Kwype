@@ -26,16 +26,14 @@ jobs:
           UPLOAD_URL=$(curl --silent --request GET \
             --url https://www.virustotal.com/api/v3/files/upload_url \
             --header 'accept: application/json' \
-            --header "x-apikey: $VT_API_KEY" | jq -r '.data' \
-          )
+            --header "x-apikey: $VT_API_KEY" | jq -r '.data' )
         
           echo "Uploading file to VirusTotal..."
           ANALYSIS_JSON=$(curl --silent --request POST \
             --url "$UPLOAD_URL" \
             --header 'accept: application/json' \
             --header "x-apikey: $VT_API_KEY" \
-            --form file=@Kwype.zip \
-          )
+            --form file=@Kwype.zip )
           ANALYSIS_ID=$(echo $ANALYSIS_JSON | jq -r '.data.id')
           echo "File uploaded. Analysis ID: $ANALYSIS_ID"
           
@@ -46,8 +44,7 @@ jobs:
             REPORT_JSON=$(curl --silent --request GET \
               --url "https://www.virustotal.com/api/v3/analyses/$ANALYSIS_ID" \
               --header 'accept: application/json' \
-              --header "x-apikey: $VT_API_KEY" \
-            )
+              --header "x-apikey: $VT_API_KEY" )
             STATUS=$(echo $REPORT_JSON | jq -r '.data.attributes.status')
             echo "Current Status: $STATUS"
           done
