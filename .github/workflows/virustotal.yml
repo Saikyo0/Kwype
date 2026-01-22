@@ -55,12 +55,12 @@ jobs:
           MALICIOUS=$(echo $REPORT_JSON | jq -r '.data.attributes.stats.malicious')
           SUSPICIOUS=$(echo $REPORT_JSON | jq -r '.data.attributes.stats.suspicious')
           UNDETECTED=$(echo $REPORT_JSON | jq -r '.data.attributes.stats.undetected')
-          PERMALINK=$(echo $REPORT_JSON | jq -r '.data.links.self')
+          HASH=$(echo $REPORT_JSON | jq -r '.data.meta.file_info.sha256')
 
           echo "malicious=$MALICIOUS" >> $GITHUB_OUTPUT
           echo "suspicious=$SUSPICIOUS" >> $GITHUB_OUTPUT
           echo "undetected=$UNDETECTED" >> $GITHUB_OUTPUT
-          echo "permalink=$PERMALINK" >> $GITHUB_OUTPUT
+          echo "hash=$HASH" >> $GITHUB_OUTPUT
 
       - name: Format Badges
         id: badges
@@ -69,7 +69,7 @@ jobs:
           BADGE_MAL="![Malicious](https://img.shields.io/badge/Malicious-${{ steps.vt_scan.outputs.malicious }}-red?style=for-the-badge)"
           BADGE_SUS="![Suspicious](https://img.shields.io/badge/Suspicious-${{ steps.vt_scan.outputs.suspicious }}-yellow?style=for-the-badge)"
           BADGE_CLN="![Clean](https://img.shields.io/badge/Clean-${{ steps.vt_scan.outputs.undetected }}-green?style=for-the-badge)"
-          LINK="[View Report](${{ steps.vt_scan.outputs.permalink }})"
+          LINK="[VirusTotal Report](https://www.virustotal.com/gui/file/${{ steps.vt_scan.outputs.hash }})"
           
           ALL_BADGES="$BADGE_MAL $BADGE_SUS $BADGE_CLN <br> $LINK"
           
@@ -83,7 +83,6 @@ jobs:
         with:
         
           header: "<h1>Kwype</h1><img width='128' height='128' alt='Kwype Logo' src='https://github.com/user-attachments/assets/8ecc8e51-82e1-407c-bf52-b7354933e870' /> <br> <br>"
-          subhead: "${{ steps.badges.outputs.badge_string }}"
-          repoTable: "KwYPE explores what happens when mobile-style gesture typing is brought to physical keyboards. <br> The main incentive for this project is **accessibility**! <br> Swipe gestures reduce repetitive key presses, making typing more comfortable for users with arthritis, RSI, or limited dexterity."
+          subhead: "${{ steps.badges.outputs.badge_string }} <br> KwYPE explores what happens when mobile-style gesture typing is brought to physical keyboards. <br> The main incentive for this project is **accessibility**! <br> Swipe gestures reduce repetitive key presses, making typing more comfortable for users with arthritis, RSI, or limited dexterity."
           footer: "**Hosted on: [kwype.app](https://kwype.netlify.app)!**"
           ref: "main"
