@@ -1,6 +1,5 @@
 name: CI
 
-# Controls when the workflow will run
 on:
   release:
     types: [published]
@@ -12,51 +11,79 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
-
-      - name: Download zip, Scan, and Return Results
+      
+      - name: Download zip, Scan, and Extract Stats
         id: vt_scan
         env:
           VT_API_KEY: ${{ secrets.VT_API_KEY }}
-          
         run: |
           echo "Downloading Kwype.zip..."
           curl -L -o Kwype.zip "https://github.com/Saikyo0/Kwype-App/releases/latest/download/Kwype.zip"
-        
+          
           echo "Getting VT Upload URL..."
           UPLOAD_URL=$(curl --silent --request GET \
             --url https://www.virustotal.com/api/v3/files/upload_url \
             --header 'accept: application/json' \
-            --header "x-apikey: $VT_API_KEY" | jq -r '.data' )
-        
+            --header "x-apikey: $VT_API_KEY" | jq -r '.data')
+          
           echo "Uploading file to VirusTotal..."
           ANALYSIS_JSON=$(curl --silent --request POST \
             --url "$UPLOAD_URL" \
             --header 'accept: application/json' \
             --header "x-apikey: $VT_API_KEY" \
-            --form file=@Kwype.zip )
+            --form file=@Kwype.zip)
+          
           ANALYSIS_ID=$(echo $ANALYSIS_JSON | jq -r '.data.id')
-          echo "File uploaded. Analysis ID: $ANALYSIS_ID"
+          echo "Analysis ID: $ANALYSIS_ID"
           
           STATUS="queued"
           echo "Waiting for scan to complete..."
+          
           while [[ "$STATUS" != "completed" ]]; do
             sleep 15
             REPORT_JSON=$(curl --silent --request GET \
               --url "https://www.virustotal.com/api/v3/analyses/$ANALYSIS_ID" \
               --header 'accept: application/json' \
-              --header "x-apikey: $VT_API_KEY" )
+              --header "x-apikey: $VT_API_KEY")
+            
             STATUS=$(echo $REPORT_JSON | jq -r '.data.attributes.status')
             echo "Current Status: $STATUS"
           done
+          
+          echo "Scan Finished. Extracting Data..."
+          
+          MALICIOUS=$(echo $REPORT_JSON | jq -r '.data.attributes.stats.malicious')
+          SUSPICIOUS=$(echo $REPORT_JSON | jq -r '.data.attributes.stats.suspicious')
+          UNDETECTED=$(echo $REPORT_JSON | jq -r '.data.attributes.stats.undetected')
+          PERMALINK=$(echo $REPORT_JSON | jq -r '.data.links.self')
 
-          MALICIOUS_COUNT=$(echo $REPORT_JSON | jq -r '.data.attributes.stats.malicious')
-          GUI_LINK=$(echo $REPORT_JSON | jq -r '.data.links.self')
-          echo "Scan Finished."
-          echo "Malicious Detections: $MALICIOUS_COUNT"
-          echo "Report Link: $GUI_LINK"
-          echo "vt_url=$GUI_LINK" >> $GITHUB_OUTPUT
+          echo "malicious=$MALICIOUS" >> $GITHUB_OUTPUT
+          echo "suspicious=$SUSPICIOUS" >> $GITHUB_OUTPUT
+          echo "undetected=$UNDETECTED" >> $GITHUB_OUTPUT
+          echo "permalink=$PERMALINK" >> $GITHUB_OUTPUT
 
-      - name: Print Success Tag
-        if: success()
+      - name: Format Badges
+        id: badges
         run: |
-          echo "Report: ${{ steps.vt_scan.outputs.vt_url }}"
+        
+          BADGE_MAL="![Malicious](https://img.shields.io/badge/Malicious-${{ steps.vt_scan.outputs.malicious }}-red?style=for-the-badge)"
+          BADGE_SUS="![Suspicious](https://img.shields.io/badge/Suspicious-${{ steps.vt_scan.outputs.suspicious }}-yellow?style=for-the-badge)"
+          BADGE_CLN="![Clean](https://img.shields.io/badge/Clean-${{ steps.vt_scan.outputs.undetected }}-green?style=for-the-badge)"
+          LINK="[View Report](${{ steps.vt_scan.outputs.permalink }})"
+          
+          ALL_BADGES="$BADGE_MAL $BADGE_SUS $BADGE_CLN <br> $LINK"
+          
+          echo "badge_string=$ALL_BADGES" >> $GITHUB_OUTPUT
+
+      - name: Update Repo README
+        uses: theboi/github-update-readme@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+        with:
+        
+          header: "<h1>Kwype</h1><img width='128' height='128' alt='Kwype Logo' src='https://github.com/user-attachments/assets/8ecc8e51-82e1-407c-bf52-b7354933e870' /> <br> <br>"
+          subhead: "${{ steps.badges.outputs.badge_string }}"
+          repoTable: "KwYPE explores what happens when mobile-style gesture typing is brought to physical keyboards. <br> The main incentive for this project is **accessibility**! <br> Swipe gestures reduce repetitive key presses, making typing more comfortable for users with arthritis, RSI, or limited dexterity."
+          footer: "**Hosted on: [kwype.app](https://kwype.netlify.app)!**"
+          ref: "main"
