@@ -4,12 +4,6 @@
 
 ---
 
-| [Saikyo0/Kwype-App](https://github.com/Saikyo0/Kwype-App) |
-| :-: |
-| <a href="https://github.com/Saikyo0/Kwype-App"><img src="https://github.com/Saikyo0/Kwype-App/raw/main/DISPLAY.jpg" alt="Saikyo0/Kwype-App" title="Saikyo0/Kwype-App" width="200" height="200"></a> |
-
-
-
 ---
 
 **Hosted on: [kwype.app](https://kwype.netlify.app)!**
