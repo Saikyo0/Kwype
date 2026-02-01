@@ -6,7 +6,7 @@ KwYPE explores what happens when mobile-style gesture typing is brought to physi
 The main incentive for this project is **accessibility**! 
 Swipe gestures reduce repetitive key presses, making typing more comfortable for users with arthritis, RSI, or limited dexterity.
 
-**Hosted on: [kwype.app](https://kwype.netlify.app)!**
+**Hosted on: [kwype.dev](https://kwype.dfv.workers.dev/)!**
 ### Why KwYPE?
 Swipe typing has become the dominant text input method on mobile devices, yet it remains almost entirely absent from desktop and laptop computers. KwYPE explores what happens when mobile-style gesture typing is brought to physical keyboards.
 Across forums and support communities, users repeatedly ask for a way to swipe words on real keyboards not touchscreens and are surprised to learn that no mainstream solution exists today.
