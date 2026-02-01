@@ -1,2 +1,3 @@
-get tflite-dist from my other template repo
-run `cmake -B build`
+- get tflite-dist from my tflite cpp template repo
+- run `cmake -B build`
+- build on Release
