@@ -4,15 +4,6 @@
 
 ---
 
-| [Saikyo0/Kwype-App](https://github.com/Saikyo0/Kwype-App) | [keelanstuart/sfxPackager](https://github.com/keelanstuart/sfxPackager) | [Saikyo0/tflite_cpp_template](https://github.com/Saikyo0/tflite_cpp_template) |
-| :-: | :-: | :-: |
-| <a href="https://github.com/Saikyo0/Kwype-App"><img src="https://github.com/Saikyo0/Kwype-App/raw/main/DISPLAY.jpg" alt="Saikyo0/Kwype-App" title="Saikyo0/Kwype-App" width="200" height="200"></a> | <a href="https://github.com/keelanstuart/sfxPackager"><img src="https://github.com/Saikyo0/Kwype-App/raw/main/DISPLAY.jpg" alt="keelanstuart/sfxPackager" title="keelanstuart/sfxPackager" width="200" height="200"></a> | <a href="https://github.com/Saikyo0/tflite_cpp_template"><img src="https://github.com/Saikyo0/Kwype-App/raw/main/DISPLAY.jpg" alt="Saikyo0/tflite_cpp_template" title="Saikyo0/tflite_cpp_template" width="200" height="200"></a> |
-
-| [Saikyo0/EthioRx](https://github.com/Saikyo0/EthioRx) |
-| :-: |
-| <a href="https://github.com/Saikyo0/EthioRx"><img src="https://github.com/Saikyo0/Kwype-App/raw/main/DISPLAY.jpg" alt="Saikyo0/EthioRx" title="Saikyo0/EthioRx" width="200" height="200"></a> |
-
-
 
 ---
 
