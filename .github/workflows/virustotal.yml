@@ -12,13 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Download zip, Scan, and Extract Stats
+      - name: Download exe, Scan, and Extract Stats
         id: vt_scan
         env:
           VT_API_KEY: ${{ secrets.VT_API_KEY }}
         run: |
-          echo "Downloading Kwype.zip..."
-          curl -L -o Kwype.zip "https://github.com/Saikyo0/Kwype-App/releases/latest/download/Kwype.zip"
+          echo "Downloading kwype.exe..."
+          curl -L -o kwype.exe "https://github.com/Saikyo0/Kwype-App/releases/latest/download/kwype.exe"
           
           echo "Getting VT Upload URL..."
           UPLOAD_URL=$(curl --silent --request GET \
@@ -31,7 +31,7 @@ jobs:
             --url "$UPLOAD_URL" \
             --header 'accept: application/json' \
             --header "x-apikey: $VT_API_KEY" \
-            --form file=@Kwype.zip)
+            --form file=@kwype.exe)
           
           ANALYSIS_ID=$(echo $ANALYSIS_JSON | jq -r '.data.id')
           echo "Analysis ID: $ANALYSIS_ID"
