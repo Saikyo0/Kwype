@@ -1,6 +1,6 @@
 ## Kwype <br> <img width='128' height='128' alt='Kwype Logo' src='https://github.com/user-attachments/assets/8ecc8e51-82e1-407c-bf52-b7354933e870' /> <br><br>
 
-![Clean](https://img.shields.io/badge/Clean-68-green?style=for-the-badge) ![Malicious](https://img.shields.io/badge/Malicious-1-red?style=for-the-badge) ![Suspicious](https://img.shields.io/badge/Suspicious-0-yellow?style=for-the-badge) <br> [VirusTotal Report](https://www.virustotal.com/gui/file/3ce3f738b12de0716f21a546c969d076479efd7c701dd38f08017dbe1100c9f5) 
+![Clean](https://img.shields.io/badge/Clean-69-green?style=for-the-badge) ![Malicious](https://img.shields.io/badge/Malicious-0-red?style=for-the-badge) ![Suspicious](https://img.shields.io/badge/Suspicious-0-yellow?style=for-the-badge) <br> [VirusTotal Report](https://www.virustotal.com/gui/file/3ce3f738b12de0716f21a546c969d076479efd7c701dd38f08017dbe1100c9f5) 
 
 KwYPE explores what happens when mobile-style gesture typing is brought to physical keyboards. 
 The main incentive for this project is **accessibility**! 
